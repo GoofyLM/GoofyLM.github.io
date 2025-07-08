@@ -1,0 +1,34 @@
+{
+  "papers": [
+    {
+      "id": 1,
+      "title": "Small Reasoning Models Falling Into the Void of CoT: A Case Study of GoofyLM/N1",
+      "authors": ["GoofyLM Lab", "Daniel (B.) Fox"],
+      "year": 2025,
+      "category": "Language Model Reasoning",
+      "tags": ["chain-of-thought", "small models", "reasoning", "GoofyLM", "token overflow", "instability"],
+      "abstract": "CoT prompting destabilizes small models like GoofyLM/N1 (135M), causing endless reasoning and output errors. We identify causes and suggest dataset constraints to fix this.",
+      "url": "https://huggingface.co/GoofyLM/N1",
+      "content": {
+        "1. Introduction": "Chain-of-Thought (CoT) prompting encourages intermediate reasoning steps to enhance interpretability. While effective in large models, this technique poses unique challenges for small language models, which may pursue reasoning chains indefinitely—risking token-limit overflow, truncated outputs, and operational failure. In compact models like GoofyLM/N1, this failure mode can lead to behavioral collapse and extended uncontrolled execution.",
+        "2. Model Overview: GoofyLM/N1": "GoofyLM/N1 is a 135-million parameter model derived from LLaMA and trained with CoT supervision. It supports deployment on Transformers, llama.cpp, and Ollama, and is available under the MIT license. Despite its small size, N1 demonstrates coherent multi-step reasoning. However, it often continues reasoning beyond practical token limits, leading to truncated, incomplete, or nonsensical outputs. In extreme cases, the model exhibits unstable behavior—described as 'schizophrenia'—where it generates hallucinated or internally contradictory content for extended periods, even running for hours without stopping unless externally interrupted.",
+        "3. Methods": {
+          "3.1 Supervision": "Training focused on step-by-step CoT traces using minimal instruction fine-tuning. Prompts did not include explicit stop tokens or token-limit awareness.",
+          "3.2 Inference Configuration": "Inference was performed with lightweight backends (Transformers and llama.cpp), focusing on small-context CoT prompting without post-processing."
+        },
+        "4. Results": "Section removed; this work does not include benchmark evaluations.",
+        "5. Discussion": {
+          "5.1 The 'Void' of Chain-of-Thought": "Small models like N1 lack robust internal stop criteria when following CoT traces. Without an awareness of length or final-answer markers, they may continue reasoning until forcibly truncated, undermining the coherence and utility of outputs. In pathological cases, this results in extended, unbroken output streams with recursive, incoherent, or erratic reasoning—effectively entering a 'reasoning void.'",
+          "5.2 Emergent Schizophrenic Behavior": "When the model exceeds its context or reasoning capacity, its internal state begins to degrade. The output becomes fragmented, self-contradictory, and unpredictable. Without architectural controls, this can persist indefinitely during runtime, producing continuous, unusable output. This suggests an urgent need for explicit self-termination mechanisms in compact CoT models.",
+          "5.3 Recommended Solution": "The only effective mitigation observed is to constrain the training dataset to short, well-bounded reasoning traces. By enforcing a strict token budget during data preparation, the model learns to reason within limits and is less likely to exhibit long-form degeneration or token overflow at inference time."
+        },
+        "6. Conclusion": "GoofyLM/N1 demonstrates that compact CoT models can reason effectively but also reveals a critical failure case: unbounded reasoning beyond token limits that devolves into persistent unstable behavior. To avoid such issues, dataset-level constraints must be imposed to teach the model bounded reasoning behavior. Shorter, token-limited training samples are essential for reliable performance."
+      }
+    }
+  ],
+  "metadata": {
+    "total_papers": 1,
+    "last_updated": "2025-06-21",
+    "categories": ["Language Model Reasoning", "Small-scale LLMs", "Chain-of-Thought"]
+  }
+}
